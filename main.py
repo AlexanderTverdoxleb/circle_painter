@@ -3,7 +3,7 @@ import random
 from PyQt5.QtGui import QPen, QPainter, QBrush, QColor
 from PyQt5.QtCore import Qt, QPoint
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
-
+from circle_painter import CirclePainter
 
 class Example(QMainWindow):
     def __init__(self):
@@ -14,20 +14,9 @@ class Example(QMainWindow):
         self.setGeometry(200, 200, 800, 800)
         self.draw_button = QPushButton("нарисовать круг", self)
         self.draw_button.setGeometry(10, 100, 150, 50)
-        self.draw_button.clicked.connect(self.update)
-
-    def paintEvent(self, paint_event):
-        r = random.randint(0, 255)
-        g = random.randint(0, 255)
-        b = random.randint(0, 255)
-        a = random.randint(1, 100)
-        painter = QPainter(self)
-        painter.begin(self)
-        painter.setPen(QPen(Qt.yellow, 5, Qt.SolidLine))
-        painter.setBrush(QBrush(QColor(r, g, b)))
-        painter.drawEllipse(QPoint(250, 250), a, a)
-        painter.end()
-
+        self.circle_painter = CirclePainter(self)
+        self.draw_button.clicked.connect(self.circle_painter.update)
+        self.circle_painter.setGeometry(200, 200, 800, 800)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
